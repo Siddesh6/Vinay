@@ -1,0 +1,143 @@
+@import "tailwindcss" source(none);
+@source "../src";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+@theme inline {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Space Grotesk", "Inter", sans-serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-destructive-foreground: var(--destructive-foreground);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-violet: var(--violet);
+  --color-surface: var(--surface);
+}
+
+:root {
+  --radius: 0.875rem;
+  --background: oklch(0.15 0.025 262);      /* #080D18 */
+  --foreground: oklch(0.97 0.005 250);
+  --card: oklch(0.2 0.03 262 / 0.55);
+  --card-foreground: oklch(0.97 0.005 250);
+  --popover: oklch(0.18 0.03 262);
+  --popover-foreground: oklch(0.97 0.005 250);
+  --primary: oklch(0.85 0.15 205);          /* #00E5FF */
+  --primary-foreground: oklch(0.15 0.025 262);
+  --violet: oklch(0.6 0.22 293);            /* #8B5CF6 */
+  --secondary: oklch(0.24 0.035 262);
+  --secondary-foreground: oklch(0.95 0.005 250);
+  --muted: oklch(0.22 0.03 262);
+  --muted-foreground: oklch(0.74 0.02 255);
+  --accent: oklch(0.6 0.22 293);
+  --accent-foreground: oklch(0.98 0 0);
+  --destructive: oklch(0.68 0.2 25);
+  --destructive-foreground: oklch(0.98 0 0);
+  --border: oklch(0.85 0.15 205 / 0.14);
+  --input: oklch(0.85 0.15 205 / 0.2);
+  --ring: oklch(0.85 0.15 205);
+  --surface: oklch(0.18 0.03 262);
+  --gradient-brand: linear-gradient(120deg, var(--primary), var(--violet));
+  --glow-primary: 0 0 24px -4px color-mix(in oklab, var(--primary) 70%, transparent);
+  --glow-violet: 0 0 30px -6px color-mix(in oklab, var(--violet) 70%, transparent);
+}
+
+@layer base {
+  * { border-color: var(--color-border); }
+  html { scroll-behavior: smooth; scroll-padding-top: 5rem; }
+  body {
+    background-color: var(--color-background);
+    color: var(--color-foreground);
+    font-family: var(--font-sans);
+    overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+  }
+  h1, h2, h3, h4 { font-family: var(--font-display); letter-spacing: -0.02em; }
+  ::selection { background: color-mix(in oklab, var(--primary) 35%, transparent); }
+}
+
+@utility text-gradient {
+  background: var(--gradient-brand);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+@utility bg-gradient-brand { background: var(--gradient-brand); }
+
+@utility glass {
+  background: linear-gradient(160deg, color-mix(in oklab, var(--surface) 75%, transparent), color-mix(in oklab, var(--background) 60%, transparent));
+  backdrop-filter: blur(14px) saturate(140%);
+  border: 1px solid var(--border);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, var(--foreground) 6%, transparent);
+}
+@utility glass-hover {
+  transition: border-color .3s, box-shadow .3s, transform .3s;
+  &:hover {
+    border-color: color-mix(in oklab, var(--primary) 45%, transparent);
+    box-shadow: var(--glow-primary), inset 0 1px 0 color-mix(in oklab, var(--foreground) 8%, transparent);
+    transform: translateY(-3px);
+  }
+}
+@utility btn-glow {
+  background: var(--gradient-brand);
+  color: var(--primary-foreground);
+  box-shadow: var(--glow-primary);
+  transition: box-shadow .3s, transform .2s;
+  &:hover { box-shadow: var(--glow-primary), var(--glow-violet); transform: translateY(-1px); }
+}
+@utility btn-ghost {
+  border: 1px solid color-mix(in oklab, var(--primary) 40%, transparent);
+  color: var(--foreground);
+  background: color-mix(in oklab, var(--primary) 6%, transparent);
+  transition: background .3s, box-shadow .3s;
+  &:hover { background: color-mix(in oklab, var(--primary) 14%, transparent); box-shadow: var(--glow-primary); }
+}
+@utility circuit-bg {
+  background-image:
+    linear-gradient(color-mix(in oklab, var(--primary) 5%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in oklab, var(--primary) 5%, transparent) 1px, transparent 1px);
+  background-size: 44px 44px;
+  mask-image: radial-gradient(ellipse at center, black 30%, transparent 75%);
+}
+
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+.reveal.in { opacity: 1; transform: none; }
+
+@keyframes dash { to { stroke-dashoffset: -40; } }
+@keyframes float-y { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-12px); } }
+@keyframes pulse-glow { 0%,100% { opacity: .5; } 50% { opacity: 1; } }
+@keyframes blink { 50% { opacity: 0; } }
+@keyframes drift { from { transform: translateY(0); opacity: 0; } 10% { opacity: .8; } to { transform: translateY(-100vh); opacity: 0; } }
+.anim-dash { stroke-dasharray: 6 14; animation: dash 1.6s linear infinite; }
+.anim-float { animation: float-y 6s ease-in-out infinite; }
+.anim-pulse { animation: pulse-glow 2.4s ease-in-out infinite; }
+.caret { animation: blink 1s step-end infinite; }
+.particle { position: absolute; bottom: -10px; border-radius: 9999px; background: var(--primary); animation: drift linear infinite; }
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  .reveal { opacity: 1; transform: none; }
+}
